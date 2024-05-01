@@ -6,3 +6,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+
+#Downloading webdriver
+#download it and paste the chromedriver.exe to the same folder as main.py
+#https://sites.google.com/chromium.org/driver/
+
+#Service and driver function
+service = Service(execution_path="chrome_driver.exe")
+driver = webdriver.Chrome(service=service)
