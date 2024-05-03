@@ -36,4 +36,10 @@ WebDriverWait(driver, 5). until(
 button_language_english = driver.find_element(By.ID, "langSelect-EN")
 button_language_english.click()
 
-time.sleep(10)
+#Declaring variables
+button_bigcookie = driver.find_element(By.ID,"bigCookie")
+
+#Creating a loop to click on the cookie and colect the rewards
+while True:
+    button_bigcookie.click()
+    
