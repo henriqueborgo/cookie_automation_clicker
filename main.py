@@ -17,3 +17,12 @@ driver = webdriver.Chrome(service=service)
 
 #Open the cookie clicker game
 driver.get("https://orteil.dashnet.org/cookieclicker/")
+
+#Wait until the cookies setting opens
+WebDriverWait(driver, 5). until(
+    EC.presence_of_element_located((By.XPATH,"//p[@class='fc-button-label' and text()='Consent']"))
+)
+
+#Accept cookie button click
+button_cookies_accept = driver.find_element(By.XPATH,"//p[@class='fc-button-label' and text()='Consent']")
+button_cookies_accept.click()
