@@ -18,7 +18,7 @@ driver = webdriver.Chrome(service=service)
 #Open the cookie clicker game
 driver.get("https://orteil.dashnet.org/cookieclicker/")
 
-#Wait until the cookies setting opens
+#Wait until the cookies settings opens
 WebDriverWait(driver, 5). until(
     EC.presence_of_element_located((By.XPATH,"//p[@class='fc-button-label' and text()='Consent']"))
 )
@@ -26,3 +26,14 @@ WebDriverWait(driver, 5). until(
 #Accept cookie button click
 button_cookies_accept = driver.find_element(By.XPATH,"//p[@class='fc-button-label' and text()='Consent']")
 button_cookies_accept.click()
+
+#Wait until the language selector opens
+WebDriverWait(driver, 5). until(
+    EC.presence_of_element_located((By.ID,"langSelect-EN"))
+)
+
+#Select language
+button_language_english = driver.find_element(By.ID, "langSelect-EN")
+button_language_english.click()
+
+time.sleep(10)
