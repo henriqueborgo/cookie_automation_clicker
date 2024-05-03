@@ -14,3 +14,6 @@ import time
 #Service and driver function
 service = Service(execution_path="chrome_driver.exe")
 driver = webdriver.Chrome(service=service)
+
+#Open the cookie clicker game
+driver.get("https://orteil.dashnet.org/cookieclicker/")
