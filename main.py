@@ -36,10 +36,35 @@ WebDriverWait(driver, 5). until(
 button_language_english = driver.find_element(By.ID, "langSelect-EN")
 button_language_english.click()
 
+#Wait until the game is loaded
+time.sleep(5)
+
 #Declaring variables
 button_bigcookie = driver.find_element(By.ID,"bigCookie")
+button_product_prefix = "product"
+value_product_prefix = "productPrice"
 
-#Creating a loop to click on the cookie and colect the rewards
+#Creating a loop to click on the big cookie
 while True:
     button_bigcookie.click()
+
+    #Buy products to increase productivity
+    for i in range(8):
+        #Check the amount of cookies available
+        value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0]
+        #Check the value of the product price
+        product_price = driver.find_element(By.ID, value_product_prefix + str(i)).text.replace(",","")
+
+        #Check if product is already enabled
+        if not product_price.isdigit():
+            try:
+                product_price = int(product_price)
+            except ValueError:
+                break
+
+        #Buy products if balance available
+        if int(value_cookies_count) > int(product_price):
+            product = driver.find_element(By.ID, button_product_prefix + str(i))
+            product.click()
+            break
     
