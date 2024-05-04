@@ -63,7 +63,10 @@ while True:
                 break
 
         #Buy products if balance available
+        
         if int(value_cookies_count) > int(product_price):
+            #Wait until the product is clickable
+            WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, button_product_prefix + str(i))))
             product = driver.find_element(By.ID, button_product_prefix + str(i))
             product.click()
             break
