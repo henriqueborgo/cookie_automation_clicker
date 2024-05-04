@@ -49,25 +49,27 @@ while True:
     button_bigcookie.click()
 
     #Buy products to increase productivity
-    for i in range(8):
+    for i in range(8,-1,-1):
+        #Check if the product is already visible, if not pass to the next
+        #product_availability = driver.find_element(By.ID, button_product_prefix + str(i)).get_attribute("class")
+        #print(product_availability)
+        #if product_availability == "product locked disabled toggledOff":
+        #    continue        
         #Check the amount of cookies available
         value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0]
         #Check the value of the product price
         product_price = driver.find_element(By.ID, value_product_prefix + str(i)).text.replace(",","")
-
         #Check if product is already enabled
         if not product_price.isdigit():
             try:
                 product_price = int(product_price)
             except ValueError:
-                break
-
+                continue
         #Buy products if balance available
-        
         if int(value_cookies_count) > int(product_price):
             #Wait until the product is clickable
             WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, button_product_prefix + str(i))))
+            #Buy the product
             product = driver.find_element(By.ID, button_product_prefix + str(i))
             product.click()
             break
-    
