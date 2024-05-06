@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 #Downloading webdriver
@@ -42,6 +43,7 @@ time.sleep(5)
 #Declaring variables
 button_bigcookie = driver.find_element(By.ID,"bigCookie")
 button_product_prefix = "product"
+button_upgrade_prefix = "upgrade"
 value_product_prefix = "productPrice"
 
 #Creating a loop to click on the big cookie
@@ -49,12 +51,7 @@ while True:
     button_bigcookie.click()
 
     #Buy products to increase productivity
-    for i in range(8,-1,-1):
-        #Check if the product is already visible, if not pass to the next
-        #product_availability = driver.find_element(By.ID, button_product_prefix + str(i)).get_attribute("class")
-        #print(product_availability)
-        #if product_availability == "product locked disabled toggledOff":
-        #    continue        
+    for i in range(11,-1,-1):     
         #Check the amount of cookies available
         value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0]
         #Check the value of the product price
@@ -73,3 +70,15 @@ while True:
             product = driver.find_element(By.ID, button_product_prefix + str(i))
             product.click()
             break
+    
+    #Buy upgrades to increase productivity
+    for j in range(1,3):
+        #Check if the upgrade is available
+        try:
+            driver.find_element(By.ID,button_upgrade_prefix + str(j))
+        except NoSuchElementException:
+            break
+
+        #Buy the upgrade
+        upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
+        upgrade.click()
