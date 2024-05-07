@@ -65,7 +65,7 @@ while True:
         #Buy products if balance available
         if int(value_cookies_count) > int(product_price):
             #Wait until the product is located
-            WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, button_product_prefix + str(i))))
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_product_prefix + str(i))))
             #Scroll the page to get the element visible
             product = driver.find_element(By.ID, button_product_prefix + str(i))
             driver.execute_script("arguments[0].scrollIntoView(true)", product)
@@ -78,16 +78,17 @@ while True:
         #Check if the upgrade is available
         try:
             #Wait until the product to be present in the DOM of the page
-            WebDriverWait(driver,5).until(EC.presence_of_element_located((By.ID, button_upgrade_prefix + str(j))))
+            WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
             upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
             upgrade.click()
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException,TimeoutException):
             break
 
         #Wait until the product to be present and clickable in the DOM
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, button_upgrade_prefix + str(j))))
+        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
         #Scroll the page to get the element visible
         upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
         driver.execute_script("arguments[0].scrollIntoView(true)", upgrade)
         #Buy the upgrade
+        time.sleep(1)
         upgrade.click()
