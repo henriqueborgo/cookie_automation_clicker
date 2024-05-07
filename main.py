@@ -85,10 +85,10 @@ while True:
             break
 
         #Wait until the product to be present and clickable in the DOM
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
+        #WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
         #Scroll the page to get the element visible
-        upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
-        driver.execute_script("arguments[0].scrollIntoView(true)", upgrade)
+        #upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
+        #driver.execute_script("arguments[0].scrollIntoView(true)", upgrade)
         #Buy the upgrade
-        time.sleep(1)
-        upgrade.click()
+        #time.sleep(1)
+        #upgrade.click()
