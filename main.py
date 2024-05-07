@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException
+import threading
 import time
 
 #Downloading webdriver
@@ -46,9 +47,16 @@ button_product_prefix = "product"
 button_upgrade_prefix = "upgrade"
 value_product_prefix = "productPrice"
 
+def click_big_cookie():
+    while True:
+        button_bigcookie.click()
+
+click_thread = threading.Thread(target=click_big_cookie)
+click_thread.start()
+
 #Creating a loop to click on the big cookie
 while True:
-    button_bigcookie.click()
+    #button_bigcookie.click()
 
     #Buy products to increase productivity
     for i in range(11,-1,-1):     
@@ -83,12 +91,3 @@ while True:
             upgrade.click()
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException,TimeoutException):
             break
-
-        #Wait until the product to be present and clickable in the DOM
-        #WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
-        #Scroll the page to get the element visible
-        #upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
-        #driver.execute_script("arguments[0].scrollIntoView(true)", upgrade)
-        #Buy the upgrade
-        #time.sleep(1)
-        #upgrade.click()
