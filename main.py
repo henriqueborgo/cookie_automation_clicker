@@ -47,6 +47,7 @@ button_product_prefix = "product"
 button_upgrade_prefix = "upgrade"
 value_product_prefix = "productPrice"
 
+#Thread to keep the big cookie clicking running in paralel
 def click_big_cookie():
     while True:
         button_bigcookie.click()
@@ -54,10 +55,8 @@ def click_big_cookie():
 click_thread = threading.Thread(target=click_big_cookie)
 click_thread.start()
 
-#Creating a loop to click on the big cookie
+#Loop to buy products and upgrades
 while True:
-    #button_bigcookie.click()
-
     #Buy products to increase productivity
     for i in range(11,-1,-1):     
         #Check the amount of cookies available
@@ -88,6 +87,7 @@ while True:
             #Wait until the product to be present in the DOM of the page
             WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
             upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
-            upgrade.click()
+            if upgrade.get_attribute("class") != "crate upgrade":
+                upgrade.click()
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException,TimeoutException):
             break
