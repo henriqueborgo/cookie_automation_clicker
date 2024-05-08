@@ -51,6 +51,7 @@ value_product_prefix = "productPrice"
 def click_big_cookie():
     while True:
         button_bigcookie.click()
+        print(driver.find_element(By.ID,"cookies").text)
 
 click_thread = threading.Thread(target=click_big_cookie)
 click_thread.start()
@@ -60,9 +61,9 @@ while True:
     #Buy products to increase productivity
     for i in range(11,-1,-1):     
         #Check the amount of cookies available
-        value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0].replace(",","")
+        value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0].replace(",","").replace(".","")
         #Check the value of the product price
-        product_price = driver.find_element(By.ID, value_product_prefix + str(i)).text.replace(",","")
+        product_price = driver.find_element(By.ID, value_product_prefix + str(i)).text.replace(",","").replace(".","")
         #Check if product is already enabled
         if not product_price.isdigit():
             try:
@@ -87,7 +88,7 @@ while True:
             #Wait until the product to be present in the DOM of the page
             WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.ID, button_upgrade_prefix + str(j))))
             upgrade = driver.find_element(By.ID,button_upgrade_prefix + str(j))
-            if upgrade.get_attribute("class") != "crate upgrade":
+            if upgrade.get_attribute("class") == "crate upgrade enabled":
                 upgrade.click()
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException,TimeoutException):
             break
