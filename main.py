@@ -51,7 +51,6 @@ value_product_prefix = "productPrice"
 def click_big_cookie():
     while True:
         button_bigcookie.click()
-        print(driver.find_element(By.ID,"cookies").text)
 
 click_thread = threading.Thread(target=click_big_cookie)
 click_thread.start()
@@ -61,17 +60,40 @@ while True:
     #Buy products to increase productivity
     for i in range(11,-1,-1):     
         #Check the amount of cookies available
-        value_cookies_count = driver.find_element(By.ID,"cookies").text.split(" ")[0].replace(",","").replace(".","")
+        value_cookie_count_raw = driver.find_element(By.ID,"cookies").text
+        value_cookies_count = value_cookie_count_raw.split(" ")[0].replace(",","").split("\n")[0]
         #Check the value of the product price
-        product_price = driver.find_element(By.ID, value_product_prefix + str(i)).text.replace(",","").replace(".","")
+        product_price_raw = driver.find_element(By.ID, value_product_prefix + str(i)).text
+        #print("product_price_raw: ",product_price_raw)
+        product_price = product_price_raw.replace(",","").replace(" million","").replace(" billion","")
+        #print("product_price: ",product_price)
         #Check if product is already enabled
         if not product_price.isdigit():
             try:
-                product_price = int(product_price)
+                product_price = float(product_price)
             except ValueError:
                 continue
+        
+        #Adjust the cookie count number
+        if "million cookies" in value_cookie_count_raw:
+            #print("value_cookie_count_raw: ",value_cookie_count_raw)
+            #print("value_coolie_count: ",value_cookies_count)
+            value_cookies_count = float(value_cookies_count)*1000000
+            #print("Cookie Million adjusted: ", value_cookies_count)
+        if "billion cookies" in value_cookie_count_raw:
+            value_cookies_count = float(value_cookies_count)*1000000000
+            #print("Cookie Billion: ", value_cookies_count)
+        
+        #Adjust the product price number
+        if "million" in product_price_raw:
+            product_price = float(product_price)*1000000
+            #print("Price Million: ",product_price)
+        if "billion" in product_price_raw:
+            product_price = float(product_price)*1000000000
+            #print("Price Billion: ",product_price)
+        
         #Buy products if balance available
-        if int(value_cookies_count) > int(product_price):
+        if float(value_cookies_count) > float(product_price):
             #Wait until the product is located
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, button_product_prefix + str(i))))
             #Scroll the page to get the element visible
