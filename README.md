@@ -52,4 +52,4 @@ Running the Log project in your local dev environment is very easy. Be sure to h
 
 
 ## Demonstration
-![Running Demonstration](images/demo.gif)
+![Running Demonstration](images/cookie_clicker_demonstration.gif)
